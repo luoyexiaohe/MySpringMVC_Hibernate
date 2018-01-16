@@ -17,6 +17,31 @@
 						http://www.springframework.org/schema/mvc            
 						http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 	<bean class="JDBC.JDBCUtil"></bean>
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
+	    <property name="locations"> <!-- PropertyPlaceholderConfigurer类中有个locations属性，接收的是一个数组，即我们可以在下面配好多个properties文件 -->  
+	        <array>  
+	            <value>classpath:cfg.properties</value>  
+	        </array>  
+	    </property>  
+	</bean> 
+	<!-- 配置数据源 -->
+    <bean id="dataSource"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+       <!-- 使用properties来配置 -->
+        <property name="driverClassName">
+            <value>${jdbc_driverClassName}</value>
+        </property>
+        <property name="url">
+            <value>${jdbc_url}</value>
+        </property>
+        <property name="username">
+            <value>${jdbc_username}</value>
+        </property>
+        <property name="password">
+            <value>${jdbc_password}</value>
+        </property>
+    </bean>
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
