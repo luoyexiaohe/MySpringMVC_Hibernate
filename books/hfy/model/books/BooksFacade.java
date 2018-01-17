@@ -3,8 +3,10 @@ package hfy.model.books;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeoutException;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import hyf.model.init.BaseFacade;
 import singel.Book;
@@ -22,6 +24,7 @@ public class BooksFacade extends BaseFacade{
 	 * @throws SQLException
 	 * 2017年10月15日 上午9:53:03
 	 */
+	@Transactional(rollbackFor=Exception.class)
 	public Map getBook() throws SQLException{
 		Map resultMap = this.Dao.query("select * from book");
 		return resultMap;
@@ -38,7 +41,9 @@ public class BooksFacade extends BaseFacade{
 		return listBook;
 		
 	}
+	@Transactional(rollbackFor=Exception.class)
 	public void addBook() throws Exception{
 		this.Dao.update("update book set bookId = '456' where id='123'");
+		throw new Exception("Test");
 	}
 }

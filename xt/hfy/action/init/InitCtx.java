@@ -1,4 +1,4 @@
-package com.hfy.init;
+package hfy.action.init;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -20,6 +20,7 @@ public class InitCtx implements ServletContextListener {
 	 */
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
+		System.out.println(123);
 		ServletContext servletContext = event.getServletContext();
 		String ctx = servletContext.getContextPath();
 		servletContext.setAttribute("ctx", ctx);

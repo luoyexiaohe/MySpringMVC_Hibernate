@@ -39,11 +39,24 @@ public class BooksAction extends BaseAction{
 	
 	@RequestMapping(value="addBook.do")
 	public void addBook(HttpServletRequest request,HttpServletResponse response) throws Exception{
-		this.facade.addBook();
+		try {
+			this.facade.addBook();
+		}catch(Exception e) {
+			System.out.println("异常已抛出");
+		}
 		String param = request.getParameter("param");
 		Map resultMap = new HashMap();
 		resultMap.put("param", 123);
 		JsonUtil.forwardJson(resultMap, response);
+	}
+	
+	@RequestMapping(value="testBook.do")
+	public void TestBook(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		Map resultMap = new HashMap();
+		resultMap.put("name", "胡飞扬");
+		resultMap.put("age", "23");
+		resultMap.put("adr", "国基生活区9号楼9110宿舍");
+		JsonUtil.forwardJson(resultMap, response,"GBK");
 	}
 	
 	

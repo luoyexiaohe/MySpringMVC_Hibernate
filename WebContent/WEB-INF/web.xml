@@ -24,6 +24,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 	</welcome-file-list>
 	<listener>
 		<description>将ctx变量放到全局变量中</description>
-		<listener-class>hfy.action.init.InitCTX</listener-class>
+		<listener-class>hfy.action.init.InitCtx</listener-class>
 	</listener>
 </web-app>
