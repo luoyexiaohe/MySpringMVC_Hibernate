@@ -3,50 +3,75 @@ package JDBC;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
+import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class JDBCUtil {
-    private static String url = null;  
-    private static String name = null;  
-    private static String user = null;  
-    private static String password = null;  
+//    private static String url = null;  
+//    private static String name = null;  
+//    private static String user = null;  
+//    private static String password = null;  
   
     private static Connection conn = null;  
     private static PreparedStatement pst = null;  
-    
+
+    private DataSource dataSource;
+
+	public DataSource getDataSource() {
+		return dataSource;
+	}
+
+	public void DataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+
+	public JDBCUtil() {
+    	try {
+			conn = dataSource.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
     /**
      * 实例化数据库连接
      */
-    public JDBCUtil() {
-        ResourceBundle rb = ResourceBundle.getBundle("cfg/cfg", Locale.ENGLISH);
-        name = rb.getString("jdbcDriver");
-        url = rb.getString("jdbcUrl");
-        user = rb.getString("jdbcUser");
-        password = rb.getString("jdbcPassword");
-        
-        try {  
-            Class.forName(name);//指定连接类型  
-            conn = DriverManager.getConnection(url, user, password);//获取连接  
-//            pst = conn.prepareStatement(sql);//准备执行语句  
-        } catch (Exception e) {  
-            e.printStackTrace();  
-        } finally{
-            
-        }
-    }
+//    public JDBCUtil() {
+//        ResourceBundle rb = ResourceBundle.getBundle("cfg/cfg", Locale.ENGLISH);
+//        name = rb.getString("jdbcDriver");
+//        url = rb.getString("jdbcUrl");
+//        user = rb.getString("jdbcUser");
+//        password = rb.getString("jdbcPassword");
+//        
+//        try {  
+//            Class.forName(name);//指定连接类型  
+//            conn = DriverManager.getConnection(url, user, password);//获取连接  
+////            Savepoint point = conn.setSavepoint();
+////            conn.rollback(point);
+////            pst = conn.prepareStatement(sql);//准备执行语句  
+//        } catch (Exception e) {  
+//            e.printStackTrace();  
+//            try {
+//            	if(conn != null) {
+//            		conn.close();
+//            	}
+//			} catch (SQLException e1) {
+//				e1.printStackTrace();
+//			}
+//        } finally{
+//            
+//        }
+//    }
     
     /**
      * 查询sql语句，将结果集封装到hashMap对象中

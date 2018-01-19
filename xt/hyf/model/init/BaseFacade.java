@@ -6,9 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import JDBC.JDBCUtil;
 
+@Transactional
 @Service
 public class BaseFacade {
 
 	@Autowired
 	protected JDBCUtil Dao ;
+	
 }
