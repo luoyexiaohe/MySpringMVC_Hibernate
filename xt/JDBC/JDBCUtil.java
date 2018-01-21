@@ -10,38 +10,40 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
 
+import hfy.action.init.InitSpring;
+
 @Repository
-public class JDBCUtil {
+public class JDBCUtil extends JdbcTemplate {
 //    private static String url = null;  
 //    private static String name = null;  
 //    private static String user = null;  
 //    private static String password = null;  
   
-    private static Connection conn = null;  
+    private Connection conn = DataSourceUtils.getConnection(getDataSource());
     private static PreparedStatement pst = null;  
 
-    private DataSource dataSource;
-
-	public DataSource getDataSource() {
-		return dataSource;
-	}
-
-	public void DataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
-
+//    @Autowired
+//    private DataSource dataSource;
+//    @Autowired
+//    private InitSpring initSpring = null;
+    
 	public JDBCUtil() {
-    	try {
-			conn = dataSource.getConnection();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		initSpring.test();
+//    	try {
+//			conn = dataSource.getConnection();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
     }
     /**
      * 实例化数据库连接
@@ -106,13 +108,7 @@ public class JDBCUtil {
     public Bean queryExact(Bean bean) throws SQLException {
     	return null;
     }
-    
 
-    public void update(String sql) throws Exception{
-    	 pst = conn.prepareStatement(sql);//准备执行语句  
-    	 printSql(sql);
-    	 pst.executeUpdate();
-    }
     
     private void printSql(String sql ) {
     	System.out.println(sql);

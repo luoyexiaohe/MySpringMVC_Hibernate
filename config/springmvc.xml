@@ -25,6 +25,7 @@
 	    </property>  
 	</bean> 
 	
+	 <bean id="initSpring" class="hfy.action.init.InitSpring"/>
 	<!-- 配置数据源 -->
     <bean id="dataSource"
         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -50,6 +51,8 @@
     <bean class="JDBC.JDBCUtil">
     	<property name="dataSource" ref="dataSource" />
     </bean>
+    
+
 	<!--        使Spring支持自动检测组件，如注解的Controller        -->
 	<context:annotation-config />
 	<context:component-scan base-package="hfy.model.*" /> 
