@@ -25,7 +25,8 @@
 	    </property>  
 	</bean> 
 	
-	 <bean id="initSpring" class="hfy.action.init.InitSpring"/>
+	<bean id="initSpring" name="initSpring" class="hfy.action.init.InitSpring" 
+		scope="singleton" lazy-init="false"/>
 	<!-- 配置数据源 -->
     <bean id="dataSource"
         class="org.springframework.jdbc.datasource.DriverManagerDataSource">

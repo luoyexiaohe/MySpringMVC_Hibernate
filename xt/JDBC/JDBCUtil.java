@@ -11,13 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.context.ContextLoaderListener;
 
 import hfy.action.init.InitSpring;
 
@@ -27,8 +26,9 @@ public class JDBCUtil extends JdbcTemplate {
 //    private static String name = null;  
 //    private static String user = null;  
 //    private static String password = null;  
-  
-    private Connection conn = DataSourceUtils.getConnection(getDataSource());
+	
+    private static Connection conn = null;
+//    private Connection conn = DataSourceUtils.getConnection(getDataSource());
     private static PreparedStatement pst = null;  
 
 //    @Autowired
@@ -84,6 +84,9 @@ public class JDBCUtil extends JdbcTemplate {
      * 2017年10月17日 上午9:29:40
      */
     public Map query(String sql) throws SQLException{
+    	if(conn == null) {
+    		conn = DataSourceUtils.getConnection(getDataSource());
+    	}
         pst = conn.prepareStatement(sql);//准备执行语句  
         printSql(sql);
         ResultSet ret = pst.executeQuery();
@@ -102,10 +105,16 @@ public class JDBCUtil extends JdbcTemplate {
     }
     
     public List<Bean> query(Bean bean) throws SQLException {
+    	if(conn == null) {
+    		conn = DataSourceUtils.getConnection(getDataSource());
+    	}
     	return null;
     }
 
     public Bean queryExact(Bean bean) throws SQLException {
+    	if(conn == null) {
+    		conn = DataSourceUtils.getConnection(getDataSource());
+    	}
     	return null;
     }
 
@@ -115,6 +124,9 @@ public class JDBCUtil extends JdbcTemplate {
     }
 
 	public List listAll(Object obj) {
+		if(conn == null) {
+    		conn = DataSourceUtils.getConnection(getDataSource());
+    	}
 		Class bean = obj.getClass();
 		String tableName = bean.getName();
 		String sql = "select * from " + tableName;
